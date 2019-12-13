@@ -3,12 +3,37 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
 
 public class SignUpPage extends BasePage {
+
+
+    @FindBy (css = "https://test.woahstork.com/register")
+    private WebElement sighUpPage;
+
+    @FindBy (css = "[placeholder='Email']")
+    private WebElement emailField;
+
+    @FindBy (css = "[class='styled__CheckboxWrapper-sc-1x07d2p-2 cjrWjQ'] [class*='ws-checkbox']")
+    private WebElement checkboxTermsAndConditions;
+
+    @FindBy (css = "[class='styled__CheckboxWrapper-sc-1x07d2p-2 cIPcIz'] [class*='ws-checkbox']")
+    private WebElement checkboxHIPAA;
+
+    @FindBy (css = "[label='Your Phone Number']")
+    private WebElement phoneNumberElement;
+
+    @FindBy (xpath = "//button[text()='Sign Up']")
+    private WebElement signUpButton;
+
+    @FindBy (css = "[placeholder='Password']")
+    private WebElement passwordField;
+
+    @FindBy (css = "[placeholder='Zipcode']")
+    private WebElement zip;
 
 
     public SignUpPage(WebDriver myDriver) {
@@ -23,17 +48,17 @@ public class SignUpPage extends BasePage {
 
     public void clickCheckboxTermsAndConditions() {
 
-        findElement("[class='styled__CheckboxWrapper-sc-1x07d2p-2 cjrWjQ'] [class*='ws-checkbox']").click();
+        checkboxTermsAndConditions.click();
     }
 
-    public void clickCheckboxHIPAA() {
+    public void clickCheckboxHIPAA () {
 
-        findElement("[class='styled__CheckboxWrapper-sc-1x07d2p-2 cIPcIz'] [class*='ws-checkbox']").click();
+       checkboxHIPAA.click();
     }
 
     public WebElement getPhoneNumberElement() {
 
-        return findElement("[label='Your Phone Number']");
+        return phoneNumberElement;
     }
 
     public String getRandomEmail() {
@@ -43,35 +68,25 @@ public class SignUpPage extends BasePage {
     }
 
     public HomePage clickToLoginButton(){
-        WebElement login_button = findButtonByText("Sign Up");
-        login_button.click();
+        signUpButton.click();
         return new HomePage(driver);
     }
 
     public void setEmailField(String email){
-        WebElement emailField = findElement("[placeholder='Email']");
-        emailField.sendKeys(email);
+        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(email);
     }
 
     public void setPasswordField(String password){
-        WebElement passwordField = findElement("[placeholder='Password']");
         passwordField.sendKeys(password);
     }
 
     public void setConfirmPasswordField(String password){
-        WebElement passwordField = findElement("[placeholder='Confirm Password']");
-        passwordField.sendKeys(password);
+         passwordField.sendKeys(password);
     }
 
     public void setZipCode(String zipcode){
-        WebElement zip = findElement("[placeholder='Zipcode']");
-        zip.sendKeys(zipcode);
+         zip.sendKeys(zipcode);
     }
-
-    public WebElement findButtonByText(String textOfTheButton) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='" + textOfTheButton + "']")));
-    }
-
 
 
 }
